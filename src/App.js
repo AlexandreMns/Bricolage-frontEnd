@@ -1,16 +1,38 @@
-import Navbar from "./Componentes/Navbar/Navbar";
 import React from "react";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import Navbar from "./Componentes/Navbar/Navbar";
+import Register from "./Pages/Register/Register";
+import UpdateProduct from "./Pages/UpdateProduct/UpdateProduct";
+import ProductList from "./Componentes/ProductList/ProductList";
+import ProductDetail from "./Componentes/ProductDetails/ProductDetails";
+import Profile from "./Pages/Profile/Profile";  
+import Login from "./Pages/Login/Login";
+import ResetPassword from "./Pages/ResetPassword/ResetPassword";
+import UserList from "./Pages/UserList/UserList";
+import ProductForm from "./Componentes/ProductForm/ProductForm";
 import "./App.css";
+//import Footer from "./Componentes/Footer/Footer"; FOOTER NOT IMPLEMENTED YET
 
 function App() {
   return (
-    <div>
-      <Navbar />
-      <div className="container">
-        <h1>Welcome to My React App</h1>
-        <p>This is a simple example of a React app using Materialize CSS.</p>
+    <Router>
+      <div>
+        <Navbar />
+        <div className="container">
+          <Routes>
+            <Route path="/products" element={<ProductList />} />
+            <Route path="/products/create" element={<ProductForm />} />
+            <Route path="/products/:id" element={<ProductDetail />} />
+            <Route path="/profile" element={<Profile />} />
+            <Route path="/register" element={<Register />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/users" element={<UserList />} />
+            <Route path="/resetpassword" element={<ResetPassword />} />~
+            <Route path="/products/:id/update" element={<UpdateProduct />} />
+          </Routes>
+        </div>
       </div>
-    </div>
+    </Router>
   );
 }
 
