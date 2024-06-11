@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import { Link } from "react-router-dom";
 
 const Navbar = () => {
   useEffect(() => {
@@ -14,24 +15,24 @@ const Navbar = () => {
     <div>
       <nav>
         <div className="nav-wrapper">
-          <a href="#!" className="brand-logo">
+          <Link to={`/home`} className="brand-logo">
             Logo
-          </a>
+          </Link>
           <a href="#" data-target="mobile-demo" className="sidenav-trigger">
             <i className="material-icons">menu</i>
           </a>
           <ul className="right hide-on-med-and-down">
             <li>
-              <a href="sass.html">Home</a>
+              <Link to={`/profile`}>User</Link>
             </li>
             <li>
-              <a href="badges.html">About</a>
+              <Link to={`/products`}>Produtos</Link>
             </li>
             <li>
               <a href="collapsible.html">Services</a>
             </li>
             <li>
-              <a href="mobile.html">Contact</a>
+              <Link to={`/profile/cart`}>Cart</Link>
             </li>
           </ul>
         </div>
@@ -39,16 +40,16 @@ const Navbar = () => {
 
       <ul className="sidenav" id="mobile-demo">
         <li>
-          <a href="sass.html">Home</a>
+          <Link to={`/profile`}>User</Link>
         </li>
         <li>
-          <a href="badges.html">About</a>
+          <Link to={`/products`}>Produtos</Link>
         </li>
         <li>
           <a href="collapsible.html">Services</a>
         </li>
         <li>
-          <a href="mobile.html">Contact</a>
+          <Link to={`/profile/cart`}>Cart</Link>
         </li>
       </ul>
     </div>

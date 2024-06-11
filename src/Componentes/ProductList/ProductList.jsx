@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { getAllProducts } from "../../Services/productService";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
+import "./ProductList.css";
 
 const ProductList = () => {
   const [products, setProducts] = useState([]);
@@ -39,25 +40,23 @@ const ProductList = () => {
         <p>Carregando...</p>
       ) : (
         <div>
-          <ul>
-            <ul>
-              {products.length > 0 ? (
-                products.map((product) => (
-                  <li key={product._id}>
-                    <Link to={`/products/${product._id}`}>
-                      <h2>{product.titulo}</h2>
-                      {/* Adicione aqui a tag <img> se houver uma imagem de produto */}
-                      {/* <img src={product.imageUrl} alt={product.titulo} /> */}
-                    </Link>
-                    <p>Preço: {product.price} €</p>
-                  </li>
-                ))
-              ) : (
-                <p>Nenhum produto encontrado.</p>
-              )}
-            </ul>
-          </ul>
-          <div>
+          <div className="product-grid">
+            {products.length > 0 ? (
+              products.map((product) => (
+                <div key={product._id} className="product-card">
+                  <Link to={`/products/${product._id}`}>
+                    <h2>{product.titulo}</h2>
+                    {/* Adicione aqui a tag <img> se houver uma imagem de produto */}
+                    {/* <img src={product.imageUrl} alt={product.titulo} className="product-image" /> */}
+                  </Link>
+                  <p>Preço: {product.price} €</p>
+                </div>
+              ))
+            ) : (
+              <p>Nenhum produto encontrado.</p>
+            )}
+          </div>
+          <div className="pagination">
             <button
               onClick={() => setPage((prev) => Math.max(prev - 1, 1))}
               disabled={page === 1}

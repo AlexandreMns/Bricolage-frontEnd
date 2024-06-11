@@ -1,5 +1,10 @@
 import React from "react";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Route,
+  Routes,
+  Navigate,
+} from "react-router-dom";
 import Navbar from "./Componentes/Navbar/Navbar";
 import Register from "./Pages/Register/Register";
 import UpdateProduct from "./Pages/UpdateProduct/UpdateProduct";
@@ -16,6 +21,8 @@ import "./App.css";
 import AddStock from "./Pages/AddStock/AddStock";
 import GetAllStock from "./Pages/GetAllSotck/GetAllStock";
 import GetStock from "./Pages/GetStockProduct/GetStockProduct";
+import ShoppingCart from "./Pages/Cart/Cart";
+import AlertPage from "./Pages/Alerta/Alerta";
 //import Footer from "./Componentes/Footer/Footer"; FOOTER NOT IMPLEMENTED YET
 
 function App() {
@@ -25,7 +32,7 @@ function App() {
         <Navbar />
         <div className="container">
           <Routes>
-            <Route path="*" element={<Home />} />
+            <Route path="/home" element={<Home />} />
             <Route path="/products" element={<ProductList />} />
             <Route path="/products/create" element={<ProductForm />} />
             <Route path="/products/:id" element={<ProductDetail />} />
@@ -39,6 +46,9 @@ function App() {
             <Route path="/stock/:productID" element={<GetStock />} />
             <Route path="/stock/all" element={<GetAllStock />} />
             <Route path="/stock/:productId/add" element={<AddStock />} />
+            <Route path="/profile/cart" element={<ShoppingCart />} />
+            <Route path="/admin/alerts" element={<AlertPage />} />
+            <Route path="*" element={<Navigate to="/home" />} />
           </Routes>
         </div>
       </div>

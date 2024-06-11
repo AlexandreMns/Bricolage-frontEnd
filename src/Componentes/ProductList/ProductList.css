@@ -1,0 +1,47 @@
+.product-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+  
+  .product-card {
+    border: 1px solid #ccc;
+    padding: 16px;
+    border-radius: 8px;
+    width: 200px; /* Ajuste conforme necessário */
+    text-align: center;
+  }
+  
+  .product-card h2 {
+    font-size: 1.25em;
+    margin: 0.5em 0;
+  }
+  
+  .product-card p {
+    font-size: 1em;
+    margin: 0.5em 0;
+  }
+  
+  .product-image {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+  }
+  
+  .pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+  }
+  
+  .pagination button {
+    padding: 8px 16px;
+    margin: 0 10px;
+    cursor: pointer;
+  }
+  
+  .pagination span {
+    font-size: 1em;
+  }
+  
