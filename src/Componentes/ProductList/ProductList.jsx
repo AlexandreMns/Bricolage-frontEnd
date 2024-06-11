@@ -1,31 +1,81 @@
-import React, { useEffect, useState } from 'react';
-import { getAllProducts } from '../../Services/productService';
-import { Link } from 'react-router-dom';
+// src/Pages/ProductList.js
+import React, { useEffect, useState } from "react";
+import { getAllProducts } from "../../Services/productService";
+import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const ProductList = () => {
   const [products, setProducts] = useState([]);
+  const [page, setPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+  const [loading, setLoading] = useState(true);
+
+  const fetchAndSetProducts = async () => {
+    setLoading(true);
+    try {
+      const params = {
+        page,
+        limit: 10,
+        sortBy: "asc", // ou 'desc' para ordenar de forma decrescente
+      };
+      const data = await getAllProducts(params);
+      setProducts(data.produtos);
+      setTotalPages(data.pages);
+    } catch (error) {
+      console.error("Erro ao buscar produtos:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
-    getAllProducts()
-      .then(response => {
-        setProducts(response.data.produtos);
-      })
-      .catch(error => {
-        console.error('Error fetching products:', error);
-      });
-  }, []);
+    fetchAndSetProducts();
+  }, [page]);
 
   return (
     <div>
-      <h1>Products</h1>
-      <Link to="/products/create">Create New Product</Link>
-      <ul>
-        {products.map(product => (
-          <li key={product._id}>
-            <Link to={`/products/${product._id}`}>{product.titulo}</Link>
-          </li>
-        ))}
-      </ul>
+      <h1>Lista de Produtos</h1>
+      {loading ? (
+        <p>Carregando...</p>
+      ) : (
+        <div>
+          <ul>
+            <ul>
+              {products.length > 0 ? (
+                products.map((product) => (
+                  <li key={product._id}>
+                    <Link to={`/products/${product._id}`}>
+                      <h2>{product.titulo}</h2>
+                      {/* Adicione aqui a tag <img> se houver uma imagem de produto */}
+                      {/* <img src={product.imageUrl} alt={product.titulo} /> */}
+                    </Link>
+                    <p>Preço: {product.price} €</p>
+                  </li>
+                ))
+              ) : (
+                <p>Nenhum produto encontrado.</p>
+              )}
+            </ul>
+          </ul>
+          <div>
+            <button
+              onClick={() => setPage((prev) => Math.max(prev - 1, 1))}
+              disabled={page === 1}
+            >
+              Anterior
+            </button>
+            <span>
+              Página {page} de {totalPages}
+            </span>
+            <button
+              onClick={() => setPage((prev) => Math.min(prev + 1, totalPages))}
+              disabled={page === totalPages}
+            >
+              Próxima
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
