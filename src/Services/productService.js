@@ -1,5 +1,4 @@
 import axios from "axios";
-import config from "../config";
 
 const API_URL = "http://localhost:3001/produtos";
 
@@ -30,7 +29,7 @@ export const getAllProducts = async (params) => {
 };
 
 export const createProduct = (data) => {
-  return axiosInstance.post(`/criar`, data, config.token);
+  return axiosInstance.post(`/criar`, data);
 };
 
 export const getProductById = (id) => {
@@ -38,9 +37,9 @@ export const getProductById = (id) => {
 };
 
 export const updateProduct = (id, data) => {
-  return axiosInstance.put(`/edit/${id}`, data, config.token);
+  return axiosInstance.put(`/edit/${id}`, data);
 };
 
 export const deleteProduct = (id) => {
-  return axiosInstance.delete(`/delete/${id}`, config.token);
+  return axiosInstance.delete(`/delete/${id}`);
 };

@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "./Alerta.css";
 import { getAllAlerts, deleteAlert } from "../../Services/alertaService";
-import { formatName } from "@ionic/cli/lib/app";
 
 const AlertPage = () => {
   const [alerts, setAlerts] = useState([]);

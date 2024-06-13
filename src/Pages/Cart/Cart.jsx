@@ -7,6 +7,7 @@ import {
   removeFromCart,
 } from "../../Services/cartService";
 import { getProductById } from "../../Services/productService";
+import { createVenda } from "../../Services/vendaService";
 
 const ShoppingCart = () => {
   const [cart, setCart] = useState(null);
@@ -14,12 +15,12 @@ const ShoppingCart = () => {
   const [error, setError] = useState(null);
   const [product, setProduct] = useState({});
   const [quantityError, setQuantityError] = useState({});
+  const [venda, setVenda] = useState(null);
 
   const fetchCart = async () => {
     setLoading(true);
     try {
       const cartData = await getCart();
-      console.log("Cart data:", cartData);
       setCart(cartData);
       await fetchProducts(cartData.items);
     } catch (error) {
@@ -37,6 +38,20 @@ const ShoppingCart = () => {
       return acc;
     }, {});
     setProduct(productsData);
+    console.log("Produtos:", product);
+  };
+
+  const handleCreateVenda = async () => {
+    setLoading(true);
+    try {
+      const vendaData = await createVenda();
+      fetchCart();
+      setVenda(vendaData);
+    } catch (error) {
+      setError("Erro ao criar a venda");
+    } finally {
+      setLoading(false);
+    }
   };
 
   const handleUpdateCart = async (productID, quantity) => {
@@ -127,6 +142,7 @@ const ShoppingCart = () => {
                   </li>
                 );
               })}
+              <button onClick={handleCreateVenda}>Finalizar Compra</button>
             </ul>
           ) : (
             <p>O carrinho está vazio.</p>

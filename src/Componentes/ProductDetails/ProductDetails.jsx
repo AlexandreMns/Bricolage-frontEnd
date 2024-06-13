@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { getProductById, deleteProduct } from "../../Services/productService";
 import { useParams, useNavigate } from "react-router-dom";
 import { addToCart } from "../../Services/cartService";
+import { addToWishlist } from "../../Services/wishlistService";
 
 const ProductDetail = () => {
   const { id } = useParams();
@@ -28,6 +29,17 @@ const ProductDetail = () => {
       await addToCart(productID, quantity);
     } catch (error) {
       setError("Erro ao adicionar item ao carrinho");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleAddToWishlist = async (productID) => {
+    setLoading(true);
+    try {
+      await addToWishlist(productID);
+    } catch (error) {
+      console.error("Erro ao adicionar produto à lista de desejos", error);
     } finally {
       setLoading(false);
     }
@@ -69,6 +81,7 @@ const ProductDetail = () => {
         min="1"
       />
       <button onClick={() => handleAddToCart(id, quantity)}>ADD TO CART</button>
+      <button onClick={() => handleAddToWishlist(id)}>ADD TO WISHLIST</button>
     </div>
   );
 };
