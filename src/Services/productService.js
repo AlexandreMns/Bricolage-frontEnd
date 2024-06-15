@@ -1,27 +1,9 @@
-import axios from "axios";
+const { axiosInstance} = require("../Axios/Axios");
 
-const API_URL = "http://localhost:3001/produtos";
-
-const axiosInstance = axios.create({
-  baseURL: API_URL,
-});
-
-axiosInstance.interceptors.request.use(
-  (config) => {
-    const token = localStorage.getItem("authToken");
-    if (token) {
-      config.headers["x-access-token"] = token;
-    }
-    return config;
-  },
-  (error) => {
-    return Promise.reject(error);
-  }
-);
 
 export const getAllProducts = async (params) => {
   try {
-    const response = await axiosInstance.get("/all", { params });
+    const response = await axiosInstance.get("produtos/all", { params });
     return response.data;
   } catch (error) {
     console.error("Erro ao buscar produtos:", error);
@@ -29,17 +11,17 @@ export const getAllProducts = async (params) => {
 };
 
 export const createProduct = (data) => {
-  return axiosInstance.post(`/criar`, data);
+  return axiosInstance.post(`produtos/criar`, data);
 };
 
 export const getProductById = (id) => {
-  return axiosInstance.get(`/${id}`);
+  return axiosInstance.get(`produtos/${id}`);
 };
 
 export const updateProduct = (id, data) => {
-  return axiosInstance.put(`/edit/${id}`, data);
+  return axiosInstance.put(`produtos/edit/${id}`, data);
 };
 
 export const deleteProduct = (id) => {
-  return axiosInstance.delete(`/delete/${id}`);
+  return axiosInstance.delete(`produtos/delete/${id}`);
 };

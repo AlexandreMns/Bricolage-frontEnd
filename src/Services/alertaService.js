@@ -1,26 +1,8 @@
-import axios from "axios";
+const { axiosInstance} = require("../Axios/Axios");
 
-const API_URL = "http://localhost:3001/alert/";
-
-const axiosInstance = axios.create({
-  baseURL: API_URL,
-});
-
-axiosInstance.interceptors.request.use(
-  (config) => {
-    const token = localStorage.getItem("authToken");
-    if (token) {
-      config.headers["x-access-token"] = token;
-    }
-    return config;
-  },
-  (error) => {
-    return Promise.reject(error);
-  }
-);
 export const getAllAlerts = async () => {
   try {
-    const response = await axiosInstance.get("/admin/");
+    const response = await axiosInstance.get("alert/admin/");
     console.log(response.data);
     return response.data;
   } catch (error) {
@@ -31,7 +13,7 @@ export const getAllAlerts = async () => {
 
 export const deleteAlert = async (id) => {
   try {
-    await axiosInstance.delete(`admin/${id}`);
+    await axiosInstance.delete(`alert/admin/${id}`);
   } catch (error) {
     console.error("Erro ao deletar o alerta:", error);
     throw error;

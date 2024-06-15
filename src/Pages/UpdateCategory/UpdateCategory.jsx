@@ -3,6 +3,7 @@ import {
   updateCategory,
   getAllCategories,
 } from "../../Services/categoriaService";
+import { useNavigate } from "react-router-dom";
 
 const UpdateCategory = () => {
   const [categories, setCategories] = useState([]);
@@ -11,6 +12,7 @@ const UpdateCategory = () => {
   const [description, setDescription] = useState("");
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const navigate = useNavigate();
 
   const loadCategories = async () => {
     setLoading(true);
@@ -50,19 +52,15 @@ const UpdateCategory = () => {
       setDescription("");
       loadCategories();
     }
+
+    // Navigate to another page
+    navigate("/categorys");
+
   };
 
   useEffect(() => {
     loadCategories();
   }, []);
-
-  useEffect(() => {
-    console.log("Categories state updated:", categories);
-  }, [categories]);
-
-  useEffect(() => {
-    console.log("Selected category state updated:", selectedCategory);
-  }, [selectedCategory]);
 
   if (loading) {
     return <p>Carregando...</p>;

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import config from '../../config';
-
+import Dropdown from './Dropdown';
+import './UserList.css';
+import { getUsersWithFilters } from '../../Services/userService';
 
 const UserList = () => {
   const [users, setUsers] = useState([]);
@@ -16,32 +16,16 @@ const UserList = () => {
     fetchUsers();
   }, [page, search, role]);
 
-  const API_URL = 'http://localhost:3001';
-
-  const axiosInstance = axios.create({
-    baseURL: API_URL,
-    headers: {
-      'x-access-token': `${config.token}`
-    }
-  });
-
   const fetchUsers = async () => {
-    setLoading(true);
     try {
-      const response = await axiosInstance.get('http://localhost:3001/user/list', {
-        params: {
-          page,
-          limit,
-          search,
-          role
-        }
-      });
-      setUsers(response.data.users);
-      setTotalPages(response.data.pages);
-      setLoading(false);
+      setLoading(true); // Iniciar carregamento
+      const response = await getUsersWithFilters({ page, limit, search, role });
+      setUsers(response.data.users); 
+      setTotalPages(response.data.totalPages); 
     } catch (error) {
-      console.error('Erro ao buscar usuários:', error);
-      setLoading(false);
+      console.error("Erro ao buscar usuários:", error);
+    } finally {
+      setLoading(false); // Finalizar carregamento
     }
   };
 
@@ -50,8 +34,8 @@ const UserList = () => {
     setPage(1); // Resetar para a primeira página ao fazer uma nova busca
   };
 
-  const handleRoleChange = (e) => {
-    setRole(e.target.value);
+  const handleRoleChange = (option) => {
+    setRole(option);
     setPage(1); // Resetar para a primeira página ao mudar o filtro de papel
   };
 
@@ -60,41 +44,44 @@ const UserList = () => {
   };
 
   return (
-    <div>
+    <div className="user-list-container">
       <h1>Lista de Usuários</h1>
-      <div>
+      <div className="user-list-header">
         <input
           type="text"
           placeholder="Buscar por nome ou email"
           value={search}
           onChange={handleSearchChange}
         />
-        <select value={role} onChange={handleRoleChange}>
-          <option value="">Todos os Papéis</option>
-          <option value="admin">Admin</option>
-          <option value="user">User</option>
-          {/* Adicione mais opções conforme necessário */}
-        </select>
+        <Dropdown
+          options={['Administrador', 'Cliente']}
+          selected={role}
+          onOptionSelect={handleRoleChange}
+        />
       </div>
       {loading ? (
         <p>Carregando...</p>
       ) : (
-        <ul>
-          {users.map(user => (
-            <li key={user.id}>
-              {user.name} - {user.email}
-            </li>
-          ))}
+        <ul className="user-list">
+          {users.length > 0 ? (
+            users.map(user => (
+              <li key={user.id}>
+                {user.name} - {user.email}
+              </li>
+            ))
+          ) : (
+            <li>Nenhum usuário encontrado</li>
+          )}
         </ul>
       )}
-      <div>
+      <div className="user-list-footer">
         <button
           onClick={() => handlePageChange(page - 1)}
           disabled={page === 1}
         >
           Anterior
         </button>
-        <span>Página {page} de {totalPages}</span>
+        <span>Página {page} </span>
         <button
           onClick={() => handlePageChange(page + 1)}
           disabled={page === totalPages}

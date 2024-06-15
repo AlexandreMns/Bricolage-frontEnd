@@ -1,4 +1,3 @@
-// src/Pages/ShoppingCart.js
 import React, { useState, useEffect } from "react";
 import {
   getCart,
@@ -31,14 +30,20 @@ const ShoppingCart = () => {
   };
 
   const fetchProducts = async (items) => {
-    const productPromises = items.map((item) => getProductById(item.product));
+    const productPromises = items.map((item) =>
+      getProductById(item.product).catch((error) => {
+        console.error(`Erro ao buscar produto com ID ${item.product}`, error);
+        return null;
+      })
+    );
     const productResponses = await Promise.all(productPromises);
     const productsData = productResponses.reduce((acc, response) => {
-      acc[response.data._id] = response.data;
+      if (response && response.data) {
+        acc[response.data._id] = response.data;
+      }
       return acc;
     }, {});
     setProduct(productsData);
-    console.log("Produtos:", product);
   };
 
   const handleCreateVenda = async () => {
@@ -106,14 +111,13 @@ const ShoppingCart = () => {
           {cart.items.length > 0 ? (
             <ul>
               {cart.items.map((item) => {
-                const products = product[item.product];
-                console.log("Product", product);
+                const productDetails = product[item.product];
                 return (
                   <li key={item.product}>
-                    {product ? (
+                    {productDetails ? (
                       <>
-                        <h2>{products.titulo}</h2>
-                        <p>Preço: {products.price}</p>
+                        <h2>{productDetails.titulo}</h2>
+                        <p>Preço: {productDetails.price}</p>
                         <p>Quantidade: {item.quantity}</p>
                         <p>Total: {item.totalPrice}</p>
                         <button
@@ -137,7 +141,7 @@ const ShoppingCart = () => {
                         </button>
                       </>
                     ) : (
-                      <p>Carregando detalhes do produto...</p>
+                      <p>Produto não encontrado</p>
                     )}
                   </li>
                 );

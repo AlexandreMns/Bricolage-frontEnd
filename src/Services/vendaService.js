@@ -1,27 +1,8 @@
-import axios from "axios";
-
-const API_URL = "http://localhost:3001/venda";
-
-const axiosInstance = axios.create({
-  baseURL: API_URL,
-});
-
-axiosInstance.interceptors.request.use(
-  (config) => {
-    const token = localStorage.getItem("authToken");
-    if (token) {
-      config.headers["x-access-token"] = token;
-    }
-    return config;
-  },
-  (error) => {
-    return Promise.reject(error);
-  }
-);
+const { axiosInstance} = require("../Axios/Axios");
 
 export const getAllVendas = async () => {
   try {
-    const response = await axiosInstance.get("/");
+    const response = await axiosInstance.get("venda/");
     return response.data;
   } catch (error) {
     console.error("Erro ao buscar vendas:", error);
@@ -29,12 +10,12 @@ export const getAllVendas = async () => {
 };
 
 export const createVenda = (data) => {
-  return axiosInstance.post("/", data);
+  return axiosInstance.post("venda/", data);
 };
 
 export const getVendaById = (id) => {
   try {
-    const response = axiosInstance.get(`/${id}`);
+    const response = axiosInstance.get(`venda/${id}`);
     return response.data;
   } catch (error) {
     console.error("Erro ao buscar venda:", error);
@@ -42,5 +23,5 @@ export const getVendaById = (id) => {
 };
 
 export const getRelatorioByVendaId = (id) => {
-  return axiosInstance.get(`/relatorio/${id}`);
+  return axiosInstance.get(`venda/relatorio/${id}`);
 };

@@ -116,4 +116,11 @@ body {
     margin-bottom: 5px;
     color: #388e3c;
   }
+
+  .imagem.produto {
+    width: 100px;
+    height: 100px;
+    height: auto;
+    border-radius: 8px;
+  }
   

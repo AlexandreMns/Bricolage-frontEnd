@@ -1,28 +1,9 @@
-import axios from "axios";
-
-const API_URL = "http://localhost:3001/cart";
-
-const axiosInstance = axios.create({
-  baseURL: API_URL,
-});
-
-axiosInstance.interceptors.request.use(
-  (config) => {
-    const token = localStorage.getItem("authToken");
-    if (token) {
-      config.headers["x-access-token"] = token;
-    }
-    return config;
-  },
-  (error) => {
-    return Promise.reject(error);
-  }
-);
+const { axiosInstance} = require("../Axios/Axios");
 
 // Função para obter o carrinho
 export const getCart = async () => {
   try {
-    const response = await axiosInstance.get("/items");
+    const response = await axiosInstance.get("cart/items");
     return response.data;
   } catch (error) {
     console.error("Erro ao buscar o carrinho:", error);
@@ -33,7 +14,7 @@ export const getCart = async () => {
 // Função para adicionar um item ao carrinho
 export const addToCart = async (productID, quantity) => {
   try {
-    const response = await axiosInstance.post(`/add/${productID}`, {
+    const response = await axiosInstance.post(`cart/add/${productID}`, {
       quantity,
     });
     return response.data;
@@ -46,7 +27,7 @@ export const addToCart = async (productID, quantity) => {
 // Função para atualizar a quantidade de um item no carrinho
 export const updateCart = async (productID, quantity) => {
   try {
-    const response = await axiosInstance.put(`/update/${productID}`, {
+    const response = await axiosInstance.put(`cart/update/${productID}`, {
       quantity,
     });
     return response.data;
@@ -59,7 +40,7 @@ export const updateCart = async (productID, quantity) => {
 // Função para remover um item do carrinho
 export const removeFromCart = async (productID) => {
   try {
-    await axiosInstance.delete(`/delete/${productID}`);
+    await axiosInstance.delete(`cart/delete/${productID}`);
   } catch (error) {
     console.error("Erro ao remover item do carrinho:", error);
     throw error;

@@ -1,28 +1,46 @@
 import React, { useState } from "react";
 import { registerUser } from "../../Services/userService";
 import { useNavigate } from "react-router-dom";
+import "./Register.css"; // Import the CSS file
 
 const RegisterPage = () => {
   const [formData, setFormData] = useState({
-    username: "",
+    name: "",
     email: "",
     password: "",
+    file: null,
   });
   const navigate = useNavigate();
 
   const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    const { name, value, files } = e.target;
+    if (name === "file") {
+      setFormData({ ...formData, [name]: files[0] });
+    } else {
+      setFormData({ ...formData, [name]: value });
+    }
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    const data = new FormData();
+    data.append("name", formData.name);
+    data.append("email", formData.email);
+    data.append("password", formData.password);
+    if (formData.file) {
+      data.append("imagem", formData.file);
+    }
+
     try {
       // Chama a função para registrar o usuário, passando os dados do formulário
-      const response = await registerUser(formData);
+      const response = await registerUser(data);
 
+      if (response.data) {
+        localStorage.setItem("authToken", response.data.userToken.token);
+        localStorage.setItem("userRole", response.data.userToken.user.role);
+      }
       // Se o registro for bem-sucedido, você pode lidar com a resposta aqui
-      console.log("Usuário registrado com sucesso:", response.data);
       setTimeout(() => {
         navigate("/home"); // Redirect to the homepage or another page
       }, 2000);
@@ -33,14 +51,15 @@ const RegisterPage = () => {
   };
 
   return (
-    <div>
-      <form onSubmit={handleSubmit}>
+    <div className="register-page">
+      <form onSubmit={handleSubmit} className="register-form">
         <input
           type="text"
-          name="username"
+          name="name"
           placeholder="Nome de Usuário"
-          value={formData.username}
+          value={formData.name}
           onChange={handleChange}
+          className="register-input"
         />
         <input
           type="email"
@@ -48,6 +67,7 @@ const RegisterPage = () => {
           placeholder="Email"
           value={formData.email}
           onChange={handleChange}
+          className="register-input"
         />
         <input
           type="password"
@@ -55,8 +75,15 @@ const RegisterPage = () => {
           placeholder="Senha"
           value={formData.password}
           onChange={handleChange}
+          className="register-input"
         />
-        <button type="submit">Registrar</button>
+        <input
+          type="file"
+          name="imagem"
+          onChange={handleChange}
+          className="register-input"
+        />
+        <button type="submit" className="register-button">Registrar</button>
       </form>
     </div>
   );

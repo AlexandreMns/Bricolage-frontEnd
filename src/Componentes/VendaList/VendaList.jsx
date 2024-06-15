@@ -77,6 +77,9 @@ const VendaList = () => {
                   <div key={index} className="item">
                     <h5>Item {index + 1}</h5>
                     <ul>
+                      <li className="imagem.produto">
+                        <img src={`http://localhost:3001/uploads/${products.imagem}`}></img>
+                      </li>
                       <li>
                         Produto: {products ? products.titulo : "Desconhecido"}
                       </li>

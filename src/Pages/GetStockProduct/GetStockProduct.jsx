@@ -2,10 +2,12 @@ import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { getStockEntriesForProduct } from "../../Services/stockService";
 import { useNavigate } from "react-router-dom";
+import { getProductById } from "../../Services/productService";
 
 const GetStock = () => {
   const { productID } = useParams();
   const [stockEntries, setStockEntries] = useState([]);
+  const [product, setProduct] = useState({}); // Adicionado para armazenar o produto [1/2
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const navigate = useNavigate();
@@ -15,6 +17,9 @@ const GetStock = () => {
       setLoading(true);
       try {
         const data = await getStockEntriesForProduct(productID);
+        const productData = await getProductById(productID);
+
+        setProduct(productData.data); // Adicionado para armazenar o produto [2/2
         setStockEntries(data);
       } catch (err) {
         setError(err.message);
@@ -40,14 +45,13 @@ const GetStock = () => {
 
   return (
     <div>
-      <h1>Entradas de Estoque para o Produto {productID}</h1>
+      <h1>Entradas de Estoque para o Produto: {product.titulo}</h1>
       {stockEntries.length > 0 ? (
         <ul>
           {stockEntries.map((entry) => (
             <li key={entry._id}>
               <p>Quantidade: {entry.quantity}</p>
               <p>Data: {new Date(entry.date).toLocaleDateString()}</p>
-              <p>Nota: {entry.note}</p>
             </li>
           ))}
         </ul>

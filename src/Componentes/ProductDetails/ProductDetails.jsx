@@ -3,6 +3,7 @@ import { getProductById, deleteProduct } from "../../Services/productService";
 import { useParams, useNavigate } from "react-router-dom";
 import { addToCart } from "../../Services/cartService";
 import { addToWishlist } from "../../Services/wishlistService";
+import "./ProductDetails.css"; // Importando o CSS criado
 
 const ProductDetail = () => {
   const { id } = useParams();
@@ -62,26 +63,48 @@ const ProductDetail = () => {
     return <div>Loading...</div>;
   }
 
+  const isAdmin = localStorage.getItem("userRole") === "Administrador";
+  const isUser = localStorage.getItem("userRole") === "Cliente";
+  const imageUrl = `http://localhost:3001/uploads/${product.imagem}`;
+
   return (
-    <div>
-      <h1>{product.titulo}</h1>
-      <p>{product.description}</p>
-      <p>{product.price}</p>
-      <p>{product.categoria}</p>
-      <img src={product.imagem} />
-      <button onClick={handleDelete}>Delete Product</button>
-      {message && <p>{message}</p>}
-      {/* Add more product details as needed */}
-      <button onClick={() => navigate(`/stock/${id}`)}>Stock Entries</button>
-      <button onClick={() => navigate(`/stock/${id}/add`)}>ADD STOCK</button>
-      <input
-        type="number"
-        value={quantity}
-        onChange={(e) => setQuantity(parseInt(e.target.value))}
-        min="1"
-      />
-      <button onClick={() => handleAddToCart(id, quantity)}>ADD TO CART</button>
-      <button onClick={() => handleAddToWishlist(id)}>ADD TO WISHLIST</button>
+    <div >
+      <div className="product-detail-header">
+        <h1>{product.titulo}</h1>
+        {isAdmin && (
+          <div className="buttons">
+            <button onClick={() => navigate(`/products/${id}/update`)}>
+              Update Product
+            </button>
+            <button onClick={handleDelete}>Delete Product</button>
+            <button onClick={() => navigate(`/stock/${id}`)}>Stock Entries</button>
+            <button onClick={() => navigate(`/stock/${id}/add`)}>ADD STOCK</button>
+          </div>
+        )}
+      </div>
+      <div className="product-detail-content">
+        <div className="imagem-do-produto">
+          <img className="imagem" src={imageUrl} alt={product.titulo} />
+        </div>
+        <div className="product-description">
+          <p>{product.description}</p>
+          <p>Price: {product.price}</p>
+          <p>Category: {product.categoria}</p>
+          <div className="product-detail-actions">
+            <input
+              type="number"
+              value={quantity}
+              onChange={(e) => setQuantity(parseInt(e.target.value))}
+              min="1"
+            />
+            <button onClick={() => handleAddToCart(id, quantity)}>ADD TO CART</button>
+            <button onClick={() => handleAddToWishlist(id)}>ADD TO WISHLIST</button>
+          </div>
+          {message && <p className="product-detail-message">{message}</p>}
+          <button className='back'onClick={() => navigate("/products")}>Back to Products</button>
+        </div>
+        
+      </div>
     </div>
   );
 };

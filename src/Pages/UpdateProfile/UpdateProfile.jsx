@@ -7,7 +7,7 @@ const UpdateProfile = () => {
     name: "",
     email: "",
     telefone: "",
-    imagem: null,
+    imagem: null, // Alterado para null para lidar com o arquivo
   });
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
@@ -16,7 +16,7 @@ const UpdateProfile = () => {
     getUserProfile()
       .then((response) => {
         const { name, email, telefone, imagem } = response.data;
-        setFormData({ name, email, telefone, imagem: null });
+        setFormData({ name, email, telefone, imagem });
         setLoading(false);
       })
       .catch((error) => {
@@ -36,25 +36,25 @@ const UpdateProfile = () => {
   const handleFileChange = (e) => {
     setFormData((prevData) => ({
       ...prevData,
-      imagem: e.target.files[0],
+      imagem: e.target.files[0], // Armazena o arquivo diretamente
     }));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const updatedData = {
-      name: formData.name,
-      telefone: formData.telefone,
-      imagem: formData.imagem,
-    };
+
+    // Cria um objeto FormData
+    const formDataToSend = new FormData();
+    formDataToSend.append("name", formData.name);
+    formDataToSend.append("telefone", formData.telefone);
+    formDataToSend.append("imagem", formData.imagem); // Adiciona o arquivo
 
     try {
-      const response = await updateUserProfile(updatedData);
-      console.log("Perfil atualizado com sucesso:", response.data);
+      const response = await updateUserProfile(formDataToSend);
       alert("Perfil atualizado com sucesso.");
       setTimeout(() => {
-        navigate("/profile"); // Redirect to the homepage or another page
-      }, 2000); // Navega de volta para a página de perfil
+        navigate("/profile"); // Redireciona para a página de perfil
+      }, 2000);
     } catch (error) {
       console.error("Erro ao atualizar perfil:", error);
       alert("Erro ao atualizar perfil.");

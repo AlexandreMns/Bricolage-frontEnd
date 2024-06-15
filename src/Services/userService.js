@@ -1,52 +1,35 @@
-import axios from "axios";
+const { axiosInstance} = require("../Axios/Axios");
 
-const API_URL = "http://localhost:3001/user";
-
-const axiosInstance = axios.create({
-  baseURL: API_URL,
-});
-
-axiosInstance.interceptors.request.use(
-  (config) => {
-    const token = localStorage.getItem("authToken");
-    if (token) {
-      config.headers["x-access-token"] = token;
-    }
-    return config;
-  },
-  (error) => {
-    return Promise.reject(error);
-  }
-);
 
 export const registerUser = (userData) => {
-  return axiosInstance.post("/register", userData);
+  return axiosInstance.post("user/register", userData);
 };
 
 export const loginUser = (credentials) => {
-  return axiosInstance.post("/login", credentials);
+  return axiosInstance.post("user/login", credentials);
 };
 
 export const getUserProfile = () => {
-  return axiosInstance.get("/profile");
+  return axiosInstance.get("user/profile");
 };
-/*
-  export const getAllUsers = () => {
-    return axiosInstance.get("/AllUsers");
-  };*/
-// Não esta a ser usado
+
 export const getUsersWithFilters = (params) => {
-  return axiosInstance.get("/list", { params });
+  try {
+    return axiosInstance.get("user/list", { params });
+  } catch (error) {
+    console.error("Erro ao buscar usuários:", error);
+  }
+
 };
 
 export const updateUserProfile = (userData) => {
-  return axiosInstance.put("/profile/", userData);
+  return axiosInstance.put("user/profile/", userData);
 };
 
 export const resetUserPassword = (passwordData) => {
-  return axiosInstance.put("/resetpassword", passwordData);
+  return axiosInstance.put("user/resetpassword", passwordData);
 };
 
 export const forgotUserPassword = (emailData) => {
-  return axiosInstance.post("/forgot-password", emailData);
+  return axiosInstance.post("user/forgot-password", emailData);
 };

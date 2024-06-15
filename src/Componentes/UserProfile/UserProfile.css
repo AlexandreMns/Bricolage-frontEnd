@@ -1,0 +1,84 @@
+/* UserProfile.css */
+
+.user-profile-container {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #ffffff;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .user-profile-image {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 20px;
+  }
+  
+  .user-profile-info {
+    margin-bottom: 20px;
+  }
+  
+  .user-profile-info p {
+    font-size: 1.2rem;
+    color: #333333;
+    margin-bottom: 10px;
+  }
+  
+  .user-profile-actions {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+  
+  .user-profile-actions button {
+    padding: 10px 20px;
+    font-size: 1rem;
+    background-color: #007bff;
+    border: none;
+    color: white;
+    cursor: pointer;
+    border-radius: 4px;
+  }
+  
+  .user-profile-actions button:hover {
+    background-color: #0056b3;
+  }
+  
+  .user-profile-vendas {
+    margin-top: 20px;
+  }
+  
+  .user-profile-vendas h3 {
+    font-size: 1.5rem;
+    color: #333333;
+    margin-bottom: 10px;
+  }
+  
+  .user-profile-vendas ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .user-profile-vendas li {
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 10px;
+    margin-bottom: 10px;
+  }
+  
+  .user-profile-vendas li p {
+    font-size: 1.1rem;
+    color: #666666;
+    margin-bottom: 5px;
+  }
+  
+  .material-icons {
+    vertical-align: middle;
+    margin-right: 5px;
+    cursor: pointer;
+  }
+  

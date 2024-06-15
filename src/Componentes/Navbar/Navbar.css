@@ -1,0 +1,93 @@
+.brand-logo {
+  margin-left: 100px;
+    padding-left: 20px;
+    font-size: 1.5rem;
+  }
+  
+  .sidenav-trigger {
+    padding: 0 20px;
+  }
+  
+  /* Estilo para o dropdown */
+  .dropdown-content {
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    position: absolute;
+    transform: translateY(0); /* Ajuste a posição do dropdown */
+    display: none; /* Inicialmente oculto */
+  }
+  
+  .dropdown-content li > a,
+  .dropdown-content li > span {
+    color: #d32f2f; /* Cor vermelha */
+  }
+  
+  .dropdown-content li > a:hover,
+  .dropdown-content li > span:hover {
+    background-color: #eeeeee; /* Altere para a cor desejada */
+  }
+  
+  .dropdown-content .divider {
+    height: 1px;
+    background-color: #e0e0e0; /* Altere para a cor desejada */
+  }
+  
+  /* Estilo para a sidenav */
+  .sidenav {
+    background-color: white;
+    color: #d32f2f; /* Cor vermelha */
+  }
+  
+  .sidenav li > a {
+    color: #d32f2f; /* Cor vermelha */
+  }
+  
+  .sidenav li > a:hover {
+    background-color: #eeeeee; /* Altere para a cor desejada */
+  }
+  
+  /* Estilo para os links */
+  ul.right > li > a {
+    color: white;
+  }
+  
+  ul.right > li > a:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+  }
+  
+  /* Adicione margem entre os itens do menu */
+  ul.right > li {
+    margin-right: 20px;
+  }
+  
+  @media only screen and (max-width: 992px) {
+    .brand-logo {
+      font-size: 1.2rem;
+    }
+  }
+  
+  /* Mostrar o dropdown ao passar o mouse */
+  ul.right > li > .dropdown-trigger:hover + .dropdown-content,
+  .dropdown-content:hover {
+    display: block;
+  }
+  
+
+  /* styles.css (ou outro nome que você preferir) */
+
+.profile-image {
+  margin-top: 14px;
+  width: 40px; /* largura desejada */
+  height: 40px; /* altura desejada */
+  border-radius: 50%; /* para tornar a imagem circular */
+  object-fit: cover; /* para garantir que a imagem cubra completamente o espaço */ /* borda branca com 2px de largura */
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+}
+
+.profile-image:hover {
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  width: 47px; /* aumenta a largura */
+  height: 47px; /* aumenta a altura */
+  transition: all 0.3s; /* animação de 0.3 segundos */
+}

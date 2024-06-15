@@ -1,40 +1,21 @@
-import axios from "axios";
-
-const API_URL = "http://localhost:3001/wishlist";
-
-const axiosInstance = axios.create({
-  baseURL: API_URL,
-});
-
-axiosInstance.interceptors.request.use(
-  (config) => {
-    const token = localStorage.getItem("authToken");
-    if (token) {
-      config.headers["x-access-token"] = token;
-    }
-    return config;
-  },
-  (error) => {
-    return Promise.reject(error);
-  }
-);
+const { axiosInstance} = require("../Axios/Axios");
 
 export const createWishlist = async (produtos) => {
-  const response = axiosInstance.post("/create", { produtos });
+  const response = axiosInstance.post("wishlist/create", { produtos });
   return response;
 };
 
 export const getWishlist = async () => {
-  const response = axiosInstance.get("/get");
+  const response = axiosInstance.get("wishlist/get");
   return response;
 };
 
 export const addToWishlist = async (productID) => {
-  const response = axiosInstance.post(`/add/${productID}`);
+  const response = axiosInstance.post(`wishlist/add/${productID}`);
   return response;
 };
 
 export const removeFromWishlist = async (productID) => {
-  const response = axiosInstance.delete(`/remove/${productID}`);
+  const response = axiosInstance.delete(`wishlist/remove/${productID}`);
   return response;
 };

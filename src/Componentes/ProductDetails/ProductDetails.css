@@ -1,0 +1,122 @@
+/* ProductDetail.css */
+
+.product-detail-container {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #ffffff;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .product-detail-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+  }
+  
+  .product-detail-header h1 {
+    font-size: 2rem;
+    color: #333333;
+  }
+  
+  .product-detail-header .buttons {
+    display: flex;
+    gap: 10px;
+  }
+  
+  .product-detail-header .buttons button {
+    padding: 10px 20px;
+    font-size: 1rem;
+    background-color: #ff3f3f;
+    border: none;
+    color: white;
+    cursor: pointer;
+    border-radius: 4px;
+  }
+  
+  .product-detail-header .buttons button:hover {
+    background-color: #ff6f6f;
+  }
+  
+  .product-detail-content {
+    display: flex;
+  }
+  
+  .product-detail-content .product-image {
+    flex: 1;
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+  }
+  
+  .product-detail-content .product-description {
+    flex: 1;
+    padding-left: 20px;
+  }
+  
+  .product-detail-content .product-description p {
+    font-size: 1.2rem;
+    line-height: 1.6;
+    color: #666666;
+    margin-bottom: 10px;
+  }
+  
+  .product-detail-actions {
+    margin-top: 20px;
+  }
+  
+  .product-detail-actions input[type="number"] {
+    width: 80px;
+    padding: 8px;
+    font-size: 1rem;
+    border: 1px solid #cccccc;
+    border-radius: 4px;
+  }
+  
+  .product-detail-actions button {
+    padding: 10px 20px;
+    font-size: 1rem;
+    background-color: #ff5100;
+    border: none;
+    color: white;
+    cursor: pointer;
+    border-radius: 4px;
+  }
+  
+  .product-detail-actions button:hover {
+    background-color: #ffac85;
+  }
+  
+  .product-detail-message {
+    margin-top: 10px;
+    font-size: 1rem;
+    color: #dc3545;
+  }
+
+  .back{
+    padding: 10px 20px;
+    font-size: 1rem;
+    background-color: #dc3545;
+    border: none;
+    color: white;
+    cursor: pointer;
+    border-radius: 4px;
+  }
+
+  .back:hover {
+    background-color: #ffac85;
+  }
+  
+  .imagem-do-produto {
+    max-width: 350px;
+    height: 350px;
+    border-radius: 8px;
+  }
+
+  .imagem{
+    width: 350px;
+    height: 350px;
+  }

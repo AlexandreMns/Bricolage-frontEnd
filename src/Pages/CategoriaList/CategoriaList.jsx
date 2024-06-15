@@ -61,7 +61,7 @@ const CategoryList = () => {
         <Link to="/category/create" className="link-button">
           Nova Categoria
         </Link>
-        <Link to="/login" className="link-button">
+        <Link to="/home" className="link-button">
           Voltar
         </Link>
         <Link to="/category/update" className="link-button">
